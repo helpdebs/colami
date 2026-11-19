@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cola — Simple Past</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Karla:ital,wght@0,400;0,600;0,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#132033;--soft:#43566E;--bg:#E4E9EE;--card:#fff;--line:#C4D0DA;
+  --red:#C4194F;--gold:#E8B23A;--green:#14705C;--pt:#5E7085}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Karla',system-ui,sans-serif;
+  font-size:17px;line-height:1.5;padding-bottom:env(safe-area-inset-bottom,0px)}
+h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;line-height:1.02;margin:0}
+button{font-family:inherit}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px 50px}
+
+.bar{position:sticky;top:0;z-index:40;background:var(--ink);color:#fff;
+  padding:12px 16px calc(12px + env(safe-area-inset-top,0px));border-bottom:3px solid var(--red)}
+.bar .in{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.bar .bd2{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:16px;letter-spacing:-.02em}
+.bar .sp{flex:1}
+.srch{display:flex;align-items:center;gap:8px;background:#1C2C44;border:1px solid #35486180;
+  border-radius:99px;padding:6px 14px;min-width:230px;flex:1;max-width:340px}
+.srch input{flex:1;background:transparent;border:0;color:#fff;font-family:'Karla',sans-serif;
+  font-size:15px;outline:none;min-width:0}
+.srch input::placeholder{color:#8FA3B8}
+.srch .ic{color:#8FA3B8;font-size:14px}
+.srch button{background:transparent;border:0;color:#8FA3B8;cursor:pointer;font-size:17px;padding:0 2px}
+.srch button:hover{color:#fff}
+
+header.top{padding:26px 0 4px}
+header.top .kick{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--red)}
+header.top h1{font-size:clamp(30px,7vw,42px);letter-spacing:-.035em;margin:7px 0 6px}
+header.top h1 em{font-style:normal;color:var(--red)}
+header.top p{color:var(--soft);margin:0;max-width:52ch}
+.tools{display:flex;gap:8px;margin:16px 0 4px;flex-wrap:wrap}
+.tools button{font-family:'DM Mono',monospace;font-size:12.5px;background:transparent;
+  border:1px solid var(--line);color:var(--soft);border-radius:99px;padding:6px 14px;cursor:pointer}
+.tools button:hover{border-color:var(--ink);color:var(--ink)}
+
+.sec{margin-top:11px;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.sec .hd{width:100%;display:flex;align-items:center;gap:13px;padding:15px 17px;background:transparent;
+  border:0;cursor:pointer;text-align:left;color:inherit}
+.sec .hd:hover{background:#F6F8FA}
+.sec .cv{flex:none;width:34px;height:34px;border-radius:9px;background:var(--ink);color:#fff;
+  font-family:'DM Mono',monospace;font-size:14px;display:flex;align-items:center;justify-content:center}
+.sec .ti{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:19px;line-height:1.15}
+.sec .sb{flex:1;font-size:13.5px;color:var(--soft)}
+.sec .ar{flex:none;color:var(--soft);font-size:15px;transition:transform .18s}
+.sec.open .ar{transform:rotate(180deg)}
+.sec .bd{display:none;padding:0 17px 16px}
+.sec.open .bd{display:block}
+.sec[data-k="irr"] .cv{background:var(--red)}
+.sec[data-k="reg"] .cv{background:var(--green)}
+.sec[data-k="trig"] .cv{background:var(--gold);color:var(--ink)}
+.sec[data-k="time"] .cv{background:var(--gold);color:var(--ink)}
+
+.grid{display:grid;gap:8px}
+.grid.irr,.grid.reg{grid-template-columns:repeat(auto-fill,minmax(228px,1fr))}
+.grid.ans{grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.grid.trig,.grid.time,.grid.conn,.grid.ask{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.grid.rule{grid-template-columns:1fr}
+
+.it{background:#F6F8FA;border:1px solid var(--line);border-radius:7px;padding:10px 12px}
+.it.verb{display:flex;align-items:center;gap:7px}
+.it .base{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:17px;min-width:5.4em}
+.it .arr{color:var(--soft);font-size:14px}
+.it .past{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:17px;
+  color:var(--red);min-width:5.6em}
+.sec[data-k="reg"] .it .past{color:var(--green)}
+.it .pt{font-size:13px;color:var(--soft);display:block}
+.it.verb .pt{flex:1;text-align:right}
+.it > b{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:18px;
+  line-height:1.15;display:block}
+.it .ex b,.it .nt b,.it .ex em,.it .ex s{display:inline}
+.it .nt b{color:var(--ink);font-weight:700}
+.it .ex{display:block;margin-top:5px;font-size:14.5px;color:var(--ink)}
+.it.rule{border-left:4px solid var(--red)}
+.it.rule .ex{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:18px;margin-top:6px}
+.it.rule .ex em{font-style:normal;color:var(--red)}
+.it.rule .ex s{color:var(--soft)}
+.it.rule .nt{display:block;margin-top:5px;font-size:14px;color:var(--soft)}
+.it.conn b,.it.time b{color:var(--red)}
+.sec[data-k="time"] .it b{color:#A07A18}
+.it.hide{display:none}
+.sec.nores .bd::after{content:"nada nesta categoria";display:block;font-family:'DM Mono',monospace;
+  font-size:13px;color:var(--soft);padding:6px 2px}
+.empty{display:none;text-align:center;padding:40px 0;color:var(--soft)}
+.empty.on{display:block}
+@media (max-width:560px){
+  .bar .in{gap:9px}.srch{min-width:100%;max-width:none;order:3}
+  .grid.irr,.grid.reg{grid-template-columns:1fr 1fr}
+  .it .base,.it .past{min-width:0}.it.verb .pt{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{.bar,.tools{display:none}.sec .bd{display:block!important}.sec{break-inside:avoid}}
+</style>
+</head>
+<body>
+
+<div class="bar"><div class="in">
+  <span class="bd2">Cola · Simple Past</span>
+  <span class="sp"></span>
+  <label class="srch"><span class="ic">⌕</span>
+    <input type="text" id="q" placeholder="procurar: went, porque, ontem..." autocomplete="off">
+    <button id="clr" title="limpar">×</button>
+  </label>
+</div></div>
+
+<div class="wrap">
+  <header class="top">
+    <span class="kick">para quando der branco</span>
+    <h1>Esqueceu?<br><em>Está tudo aqui.</em></h1>
+    <p>Oito categorias. Clique na que você precisa agora — as outras ficam fechadas,
+    para não poluir. Ou use a busca lá em cima para achar uma palavra direto.</p>
+    <div class="tools">
+      <button id="all">abrir todas</button>
+      <button id="none">fechar todas</button>
+    </div>
+  </header>
+<section class="sec" data-k="regras"><button class="hd"><span class="cv">1</span><span class="ti">As 4 regrinhas</span><span class="sb">o esqueleto de qualquer frase no passado</span><span class="ar">▾</span></button><div class="bd"><div class="grid regras"><div class="it rule"><b>Afirmativo — o verbo muda</b><span class="ex">I <em>went</em> to the beach.</span><span class="nt">Regular ganha <b>-ed</b>. Rebelde vira outra palavra.</span></div><div class="it rule"><b>Negativo — o verbo volta ao normal</b><span class="ex">I <em>didn't go</em> to the beach.</span><span class="nt">O passado já está no <b>didn't</b>. Nunca <s>didn't went</s>.</span></div><div class="it rule"><b>Pergunta — mesma coisa</b><span class="ex"><em>Did you go</em> to the beach?</span><span class="nt">Depois de <b>did</b>, verbo normal. Resposta: <b>Yes, I did</b> / <b>No, I didn't</b>.</span></div><div class="it rule"><b>Como escrever o -ed</b><span class="ex">study → stud<em>ied</em> · like → lik<em>ed</em> · work → work<em>ed</em></span><span class="nt">Consoante + <b>y</b> vira <b>-ied</b>. Já termina em <b>e</b>? só o <b>-d</b>.</span></div><div class="it rule"><b>was / were — bloco pronto</b><span class="ex">I <em>was</em> tired. · It <em>was</em> great. · They <em>were</em> late.</span><span class="nt">Use como bloco, sem regra. É o <i>ser/estar</i> no passado.</span></div></div></div></section><section class="sec" data-k="irr"><button class="hd"><span class="cv">2</span><span class="ti">Verbos rebeldes (23)</span><span class="sb">não ganham -ed, viram outra palavra</span><span class="ar">▾</span></button><div class="bd"><div class="grid irr"><div class="it verb"><span class="base">buy</span><span class="arr">→</span><span class="past">bought</span><span class="pt">comprar</span></div><div class="it verb"><span class="base">come</span><span class="arr">→</span><span class="past">came</span><span class="pt">vir</span></div><div class="it verb"><span class="base">drink</span><span class="arr">→</span><span class="past">drank</span><span class="pt">beber</span></div><div class="it verb"><span class="base">eat</span><span class="arr">→</span><span class="past">ate</span><span class="pt">comer</span></div><div class="it verb"><span class="base">feel</span><span class="arr">→</span><span class="past">felt</span><span class="pt">sentir</span></div><div class="it verb"><span class="base">find</span><span class="arr">→</span><span class="past">found</span><span class="pt">achar · encontrar</span></div><div class="it verb"><span class="base">get</span><span class="arr">→</span><span class="past">got</span><span class="pt">chegar · pegar · receber</span></div><div class="it verb"><span class="base">give</span><span class="arr">→</span><span class="past">gave</span><span class="pt">dar</span></div><div class="it verb"><span class="base">go</span><span class="arr">→</span><span class="past">went</span><span class="pt">ir</span></div><div class="it verb"><span class="base">have</span><span class="arr">→</span><span class="past">had</span><span class="pt">tomar · ter</span></div><div class="it verb"><span class="base">leave</span><span class="arr">→</span><span class="past">left</span><span class="pt">sair de · deixar</span></div><div class="it verb"><span class="base">make</span><span class="arr">→</span><span class="past">made</span><span class="pt">fazer</span></div><div class="it verb"><span class="base">meet</span><span class="arr">→</span><span class="past">met</span><span class="pt">conhecer · encontrar</span></div><div class="it verb"><span class="base">put</span><span class="arr">→</span><span class="past">put</span><span class="pt">colocar · botar</span></div><div class="it verb"><span class="base">say</span><span class="arr">→</span><span class="past">said</span><span class="pt">dizer</span></div><div class="it verb"><span class="base">see</span><span class="arr">→</span><span class="past">saw</span><span class="pt">ver</span></div><div class="it verb"><span class="base">sleep</span><span class="arr">→</span><span class="past">slept</span><span class="pt">dormir</span></div><div class="it verb"><span class="base">spend</span><span class="arr">→</span><span class="past">spent</span><span class="pt">passar (tempo) · gastar</span></div><div class="it verb"><span class="base">take</span><span class="arr">→</span><span class="past">took</span><span class="pt">tomar · pegar</span></div><div class="it verb"><span class="base">tell</span><span class="arr">→</span><span class="past">told</span><span class="pt">contar</span></div><div class="it verb"><span class="base">think</span><span class="arr">→</span><span class="past">thought</span><span class="pt">achar · pensar</span></div><div class="it verb"><span class="base">understand</span><span class="arr">→</span><span class="past">understood</span><span class="pt">entender</span></div><div class="it verb"><span class="base">wake up</span><span class="arr">→</span><span class="past">woke up</span><span class="pt">acordar</span></div></div></div></section><section class="sec" data-k="reg"><button class="hd"><span class="cv">3</span><span class="ti">Verbos certinhos (16)</span><span class="sb">é só acrescentar -ed</span><span class="ar">▾</span></button><div class="bd"><div class="grid reg"><div class="it verb"><span class="base">arrive</span><span class="arr">→</span><span class="past">arrived</span><span class="pt">chegar</span></div><div class="it verb"><span class="base">call</span><span class="arr">→</span><span class="past">called</span><span class="pt">ligar</span></div><div class="it verb"><span class="base">clean</span><span class="arr">→</span><span class="past">cleaned</span><span class="pt">limpar</span></div><div class="it verb"><span class="base">cook</span><span class="arr">→</span><span class="past">cooked</span><span class="pt">cozinhar</span></div><div class="it verb"><span class="base">decide</span><span class="arr">→</span><span class="past">decided</span><span class="pt">decidir</span></div><div class="it verb"><span class="base">finish</span><span class="arr">→</span><span class="past">finished</span><span class="pt">terminar</span></div><div class="it verb"><span class="base">listen</span><span class="arr">→</span><span class="past">listened</span><span class="pt">ouvir</span></div><div class="it verb"><span class="base">start</span><span class="arr">→</span><span class="past">started</span><span class="pt">começar</span></div><div class="it verb"><span class="base">stay</span><span class="arr">→</span><span class="past">stayed</span><span class="pt">ficar</span></div><div class="it verb"><span class="base">study</span><span class="arr">→</span><span class="past">studied</span><span class="pt">estudar</span></div><div class="it verb"><span class="base">talk</span><span class="arr">→</span><span class="past">talked</span><span class="pt">conversar</span></div><div class="it verb"><span class="base">travel</span><span class="arr">→</span><span class="past">traveled</span><span class="pt">viajar</span></div><div class="it verb"><span class="base">try</span><span class="arr">→</span><span class="past">tried</span><span class="pt">tentar · experimentar</span></div><div class="it verb"><span class="base">walk</span><span class="arr">→</span><span class="past">walked</span><span class="pt">ir a pé</span></div><div class="it verb"><span class="base">watch</span><span class="arr">→</span><span class="past">watched</span><span class="pt">assistir</span></div><div class="it verb"><span class="base">work</span><span class="arr">→</span><span class="past">worked</span><span class="pt">trabalhar</span></div></div></div></section><section class="sec" data-k="trig"><button class="hd"><span class="cv">4</span><span class="ti">Começos de frase (12)</span><span class="sb">decore o começo, encaixe o resto</span><span class="ar">▾</span></button><div class="bd"><div class="grid trig"><div class="it trig"><b>I went to ___</b><span class="pt">eu fui a / para</span><span class="ex">I went to a new city.</span></div><div class="it trig"><b>I got to ___</b><span class="pt">eu cheguei em</span><span class="ex">I got to work at ten.</span></div><div class="it trig"><b>I met ___</b><span class="pt">eu conheci</span><span class="ex">I met a girl from Brazil.</span></div><div class="it trig"><b>I told her ___</b><span class="pt">eu contei para ela</span><span class="ex">I told her everything.</span></div><div class="it trig"><b>I said ___</b><span class="pt">eu disse</span><span class="ex">I said no.</span></div><div class="it trig"><b>I thought ___</b><span class="pt">eu achei que</span><span class="ex">I thought it was difficult.</span></div><div class="it trig"><b>I felt ___</b><span class="pt">eu me senti</span><span class="ex">I felt so happy.</span></div><div class="it trig"><b>I tried to ___</b><span class="pt">eu tentei</span><span class="ex">I tried to call you.</span></div><div class="it trig"><b>I decided to ___</b><span class="pt">eu decidi</span><span class="ex">I decided to stay home.</span></div><div class="it trig"><b>I started to ___</b><span class="pt">eu comecei a</span><span class="ex">I started to study English.</span></div><div class="it trig"><b>I spent ___</b><span class="pt">eu passei / gastei</span><span class="ex">I spent two hours there.</span></div><div class="it trig"><b>I left ___</b><span class="pt">eu saí de / deixei</span><span class="ex">I left my bag at the hotel.</span></div></div></div></section><section class="sec" data-k="time"><button class="hd"><span class="cv">5</span><span class="ti">Quando foi (17)</span><span class="sb">vai sempre no fim da frase</span><span class="ar">▾</span></button><div class="bd"><div class="grid time"><div class="it time"><b>yesterday</b><span class="pt">ontem</span><span class="ex">I worked yesterday.</span></div><div class="it time"><b>yesterday morning</b><span class="pt">ontem de manhã</span><span class="ex">I woke up early yesterday morning.</span></div><div class="it time"><b>the day before yesterday</b><span class="pt">anteontem</span><span class="ex">I cooked dinner the day before yesterday.</span></div><div class="it time"><b>last night</b><span class="pt">ontem à noite</span><span class="ex">I watched a series last night.</span></div><div class="it time"><b>last week</b><span class="pt">semana passada</span><span class="ex">I called my sister last week.</span></div><div class="it time"><b>last weekend</b><span class="pt">no fim de semana passado</span><span class="ex">I went out last weekend.</span></div><div class="it time"><b>last month</b><span class="pt">mês passado</span><span class="ex">I traveled last month.</span></div><div class="it time"><b>last year</b><span class="pt">ano passado</span><span class="ex">I studied English last year.</span></div><div class="it time"><b>five minutes ago</b><span class="pt">há cinco minutos</span><span class="ex">I called her five minutes ago.</span></div><div class="it time"><b>an hour ago</b><span class="pt">há uma hora</span><span class="ex">I ate lunch an hour ago.</span></div><div class="it time"><b>two days ago</b><span class="pt">há dois dias</span><span class="ex">I bought this two days ago.</span></div><div class="it time"><b>a week ago</b><span class="pt">há uma semana</span><span class="ex">I saw my friends a week ago.</span></div><div class="it time"><b>a long time ago</b><span class="pt">há muito tempo</span><span class="ex">I went to Rio a long time ago.</span></div><div class="it time"><b>earlier</b><span class="pt">mais cedo</span><span class="ex">I talked to her earlier.</span></div><div class="it time"><b>earlier today</b><span class="pt">hoje mais cedo</span><span class="ex">I studied earlier today.</span></div><div class="it time"><b>this morning</b><span class="pt">hoje de manhã</span><span class="ex">I had coffee this morning.</span></div><div class="it time"><b>the other day</b><span class="pt">outro dia</span><span class="ex">I saw a movie the other day.</span></div></div></div></section><section class="sec" data-k="conn"><button class="hd"><span class="cv">6</span><span class="ti">Conectores (8)</span><span class="sb">para juntar duas ideias numa frase só</span><span class="ar">▾</span></button><div class="bd"><div class="grid conn"><div class="it conn"><b>and</b><span class="pt">e</span><span class="ex">I went out <b>and</b> I met my friends.</span></div><div class="it conn"><b>but</b><span class="pt">mas</span><span class="ex">I tried to call you, <b>but</b> you didn't answer.</span></div><div class="it conn"><b>so</b><span class="pt">então</span><span class="ex">I felt tired, <b>so</b> I went to bed early.</span></div><div class="it conn"><b>because</b><span class="pt">porque</span><span class="ex">I stayed home <b>because</b> I had a lot of work.</span></div><div class="it conn"><b>then</b><span class="pt">aí · depois</span><span class="ex">I had dinner, <b>then</b> I watched a series.</span></div><div class="it conn"><b>after that</b><span class="pt">depois disso</span><span class="ex">I woke up late. <b>After that</b>, everything went wrong.</span></div><div class="it conn"><b>at first</b><span class="pt">no começo</span><span class="ex"><b>At first</b> I thought it was difficult.</span></div><div class="it conn"><b>in the end</b><span class="pt">no fim</span><span class="ex"><b>In the end</b> it was a great day.</span></div></div></div></section><section class="sec" data-k="ask"><button class="hd"><span class="cv">7</span><span class="ti">Perguntas prontas (6)</span><span class="sb">para você puxar a conversa</span><span class="ar">▾</span></button><div class="bd"><div class="grid ask"><div class="it pair"><b>What did you do?</b><span class="pt">O que você fez?</span></div><div class="it pair"><b>Where did you go?</b><span class="pt">Aonde você foi?</span></div><div class="it pair"><b>Who did you meet?</b><span class="pt">Quem você conheceu?</span></div><div class="it pair"><b>What did you say?</b><span class="pt">O que você disse?</span></div><div class="it pair"><b>How did you feel?</b><span class="pt">Como você se sentiu?</span></div><div class="it pair"><b>When did you get there?</b><span class="pt">Quando você chegou lá?</span></div></div></div></section><section class="sec" data-k="ans"><button class="hd"><span class="cv">8</span><span class="ti">Respostas e reações (12)</span><span class="sb">quando você precisa ganhar tempo</span><span class="ar">▾</span></button><div class="bd"><div class="grid ans"><div class="it pair"><b>Yes, I did.</b><span class="pt">Sim.</span></div><div class="it pair"><b>No, I didn't.</b><span class="pt">Não.</span></div><div class="it pair"><b>It was great.</b><span class="pt">Foi ótimo.</span></div><div class="it pair"><b>It was terrible.</b><span class="pt">Foi péssimo.</span></div><div class="it pair"><b>Nice!</b><span class="pt">Que legal!</span></div><div class="it pair"><b>Really?</b><span class="pt">Sério?</span></div><div class="it pair"><b>That's cool!</b><span class="pt">Que massa!</span></div><div class="it pair"><b>Oh no!</b><span class="pt">Ah, não!</span></div><div class="it pair"><b>And you?</b><span class="pt">E você?</span></div><div class="it pair"><b>I don't remember.</b><span class="pt">Não lembro.</span></div><div class="it pair"><b>I'm not sure.</b><span class="pt">Não tenho certeza.</span></div><div class="it pair"><b>How do you say...?</b><span class="pt">Como se diz...?</span></div></div></div></section>
+  <div class="empty" id="empty">Nada encontrado. Tente outra palavra.</div>
+</div>
+
+<script>
+var secs=[].slice.call(document.querySelectorAll('.sec'));
+secs.forEach(function(s){
+  s.querySelector('.hd').addEventListener('click', function(){
+    s.classList.toggle('open');
+    try{ localStorage.setItem('cola_'+s.dataset.k, s.classList.contains('open')?'1':'0'); }catch(e){}
+  });
+  try{ if(localStorage.getItem('cola_'+s.dataset.k)==='1') s.classList.add('open'); }catch(e){}
+});
+if(!document.querySelector('.sec.open')) secs[0].classList.add('open');
+
+document.getElementById('all').addEventListener('click', function(){
+  secs.forEach(function(s){ s.classList.add('open'); });
+});
+document.getElementById('none').addEventListener('click', function(){
+  secs.forEach(function(s){ s.classList.remove('open'); });
+});
+
+var q=document.getElementById('q'), empty=document.getElementById('empty');
+function norm(s){
+  return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[\u2019\u00b4`]/g,"'");
+}
+function search(){
+  var v=norm(q.value.trim());
+  var total=0;
+  secs.forEach(function(s){
+    var hits=0;
+    s.querySelectorAll('.it').forEach(function(it){
+      var ok = !v || norm(it.textContent).indexOf(v)>-1;
+      it.classList.toggle('hide', !ok);
+      if(ok) hits++;
+    });
+    total+=hits;
+    if(v){
+      s.style.display = hits? '' : 'none';
+      s.classList.toggle('open', hits>0);
+    } else {
+      s.style.display=''; s.classList.remove('nores');
+    }
+  });
+  empty.classList.toggle('on', !!v && total===0);
+  if(!v){
+    secs.forEach(function(s){
+      var k=s.dataset.k, on=false;
+      try{ on = localStorage.getItem('cola_'+k)==='1'; }catch(e){}
+      s.classList.toggle('open', on);
+    });
+    if(!document.querySelector('.sec.open')) secs[0].classList.add('open');
+  }
+}
+q.addEventListener('input', search);
+document.getElementById('clr').addEventListener('click', function(){ q.value=''; search(); q.focus(); });
+document.addEventListener('keydown', function(e){
+  if(e.key==='Escape'){ q.value=''; search(); }
+  if(e.key==='/' && document.activeElement!==q){ e.preventDefault(); q.focus(); }
+});
+</script>
+</body>
+</html>
